@@ -93,33 +93,23 @@ public class RedBlackTree<K extends Comparable<K>, V> {
     }
 
     public boolean checkPaths() {
-        return compareBlackCount(root, -10, 0) != -1;  // Magic Constant -10, put psfi SENTINEL?
+        return countBlacks(root) != -1;
     }
 
-    private int compareBlackCount(Node<K, V> node, int endCount, int current) {
-
+    private int countBlacks(Node<K, V> node) {
         if (node == null) {
-            current++;
-            if (endCount == -10) {
-                endCount = current;
-                return endCount;
-            }
-            if (current == endCount) {
-                return endCount;
-            } else {
-                return -1;
-            }
+            return 1;
         }
 
-        if (!isRed(node)) {
-            current++;
-        }
-        endCount = compareBlackCount(node.left, endCount, current);
-        endCount = compareBlackCount(node.right, endCount, current);
+        int left = countBlacks(node.left);
+        int right = countBlacks(node.right);
 
-        return endCount;
+        if (left != -1 && left == right) {
+            return !isRed(node) ? left + 1 : left;
+        } else {
+            return -1;
+        }
     }
-
 
     private class Node<K, V> {
 
