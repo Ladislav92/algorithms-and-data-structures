@@ -6,3 +6,7 @@ Trees:
 -Binary Search Tree
 
 -Red Black Tree
+
+Lists:
+
+-Double Linked List
